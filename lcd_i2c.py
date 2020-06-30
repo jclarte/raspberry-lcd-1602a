@@ -60,12 +60,28 @@ E_DELAY = 0.0005
 #bus = smbus.SMBus(0)  # Rev 1 Pi uses 0
 bus = smbus.SMBus(1) # Rev 2 Pi uses 1
 
+
+class LCD:
+
+    def __init__(self):
+        lcd_init()
+        self.line = LCD_LINE_1
+
+    def write(self, text):
+        lcd_string(text, self.line)
+
+    def append(self, character):
+        raise NotImplementedError
+
+    def set_cursor(self):
+        raise NotImplementedError
+
 def lcd_init():
   # Initialise display
   lcd_byte(0x33,LCD_CMD) # 110011 Initialise
   lcd_byte(0x32,LCD_CMD) # 110010 Initialise
   lcd_byte(0x06,LCD_CMD) # 000110 Cursor move direction
-  lcd_byte(0x0C,LCD_CMD) # 001100 Display On,Cursor Off, Blink Off 
+  lcd_byte(0x0C,LCD_CMD) # 001100 Display On,Cursor Off, Blink Off
   lcd_byte(0x28,LCD_CMD) # 101000 Data length, number of lines, font size
   lcd_byte(0x01,LCD_CMD) # 000001 Clear display
   time.sleep(E_DELAY)
@@ -120,7 +136,7 @@ def main():
     lcd_string("I2C LCD        <",LCD_LINE_2)
 
     time.sleep(3)
-  
+
     # Send some more text
     lcd_string(">         RPiSpy",LCD_LINE_1)
     lcd_string(">        I2C LCD",LCD_LINE_2)
@@ -135,4 +151,3 @@ if __name__ == '__main__':
     pass
   finally:
     lcd_byte(0x01, LCD_CMD)
-

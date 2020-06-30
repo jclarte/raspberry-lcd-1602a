@@ -7,8 +7,6 @@ Only one, run `sudo ./install.sh` to install i2c support and python3 smbus modul
 
 You can use `./remote_install.sh` to install all stuff on a remote (LAN) raspberry pi through ssh [TODO]
 
-At every update run `python3 setup.py install` to update module [TODO]
-
 ## 2. Tests
 
 There are some various tests to run on `./tests/`
@@ -16,6 +14,7 @@ There are some various tests to run on `./tests/`
 ## 3. Usage
 
 ```python3
-import lcd
-lcd_print("Hello !")
+from lcd import LCD
+screen = LCD()
+screen.write("Hello !")
 ```
